@@ -8,15 +8,15 @@ import MediaButtons from "../components/MediaButtons.astro";
   <div class="container">
     <div class="card">
       <!-- Thumbnail Image -->
-
-      <img
-        class="card__image"
-        src="/assets/images/girl-with-pearl-earring/thumbnail.jpg"
-        alt=""
-      />
+      <div class="card__image">
+        <img
+          src="/assets/images/girl-with-pearl-earring/thumbnail.jpg"
+          alt=""
+        />
+      </div>
 
       <!-- Link and Subhead -->
-      <div class="card__header p-8 pe-12 pt-14 flex flex-col gap-2">
+      <div class="card__info p-8 pe-12 pt-14 flex flex-col gap-2">
         <a class="card__link text-100 fs-700 leading-tight" href="#"
           >Girl with a Pearl Earring</a
         >
@@ -33,14 +33,16 @@ import MediaButtons from "../components/MediaButtons.astro";
     .card {
       position: relative;
       display: grid;
-      grid-template-columns: minmax(0, 1fr);
 
       & > * {
         grid-column: 1;
         grid-row: 1;
       }
 
-      &__header {
+      &__image {
+      }
+
+      &__info {
         justify-self: start;
         align-self: end;
         background: linear-gradient(
