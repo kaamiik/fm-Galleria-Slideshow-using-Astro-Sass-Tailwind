@@ -1,29 +1,62 @@
 ---
-import SiteFooter from "../components/SiteFooter.astro";
-import SiteHeader from "../components/SiteHeader.astro";
 import Layout from "../layouts/BaseLayout.astro";
+import Button from "../components/Button.astro";
+import MediaButtons from "../components/MediaButtons.astro";
 ---
 
-<Layout title="Let's get to work">
-  <div class="container flow">
-    <h1 class="heading-1">Let's go</h1>
-    <p>
-      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laborum nulla
-      repellendus dolore quam quas? Nisi eaque veniam dolorem enim. Odit
-      incidunt nisi dignissimos facilis perspiciatis quidem accusantium at
-      consectetur minus.
-    </p>
-    <p>
-      Aperiam non nulla recusandae totam atque officia debitis tenetur, natus
-      veritatis eius perferendis libero earum voluptatum doloremque dignissimos,
-      ut laborum illum eligendi autem ipsa quaerat. Dolorum consequatur ipsum
-      harum ut.
-    </p>
-    <p>
-      Dolore molestias et esse neque beatae atque. Quas necessitatibus,
-      quibusdam est vero neque corporis doloremque consectetur error, dicta
-      animi commodi! Accusamus distinctio dolor eligendi sint repudiandae
-      sapiente adipisci nemo doloribus?
-    </p>
+<Layout title="Frontend Mentor | Galleria slideshow site">
+  <div class="container">
+    <div class="card">
+      <!-- Thumbnail Image -->
+
+      <img
+        class="card__image"
+        src="/assets/images/girl-with-pearl-earring/thumbnail.jpg"
+        alt=""
+      />
+
+      <!-- Link and Subhead -->
+      <div class="card__header p-8 pe-12 pt-14 flex flex-col gap-2">
+        <a class="card__link text-100 fs-700 leading-tight" href="#"
+          >Girl with a Pearl Earring</a
+        >
+        <p class="text-100/75 fs-300 leading-tight font-normal">
+          Vincent Van Gogh
+        </p>
+      </div>
+    </div>
   </div>
+
+  <style lang="scss">
+    @use "../styles/abstracts/" as *;
+
+    .card {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+
+      & > * {
+        grid-column: 1;
+        grid-row: 1;
+      }
+
+      &__header {
+        justify-self: start;
+        align-self: end;
+        background: linear-gradient(
+          to bottom,
+          hsla(0, 0%, 0%, 0.01%) 0%,
+          hsla(0, 0%, 0%, 84%) 100%
+        );
+      }
+
+      &__link {
+        &::after {
+          content: "";
+          position: absolute;
+          inset: 0;
+        }
+      }
+    }
+  </style>
 </Layout>
