@@ -1,85 +1,38 @@
 ---
 import Layout from "../layouts/BaseLayout.astro";
-import Button from "../components/Button.astro";
-import MediaButtons from "../components/MediaButtons.astro";
+import GalleryCard from "../components/GalleryCard.astro";
+
+import data from "../data.json";
 ---
 
-<Layout title="Frontend Mentor | Galleria slideshow site">
-  <div class="container">
-    <div class="card">
-      <!-- Thumbnail Image -->
-      <div class="card__image">
-        <img
-          src="/assets/images/girl-with-pearl-earring/thumbnail.jpg"
-          alt=""
-        />
-      </div>
-      <!-- Link and Subhead -->
-      <div class="card__info p-8 pe-12 pt-14 flex flex-col gap-2">
-        <a class="card__link text-100 fs-700 leading-tight" href="#"
-          >Girl with a Pearl Earring</a
-        >
-        <p class="text-100/75 fs-300 leading-tight font-normal">
-          Vincent Van Gogh
-        </p>
-      </div>
+<Layout title="Frontend Mentor | Galleria slideshow site" start={true}>
+  <div class="container" data-page="index">
+    <div class="gallery-cards">
+      {
+        data.map((item) => (
+          <GalleryCard
+            imageThumbnail={item.images.thumbnail}
+            link={`details/${item.name.toLocaleLowerCase().replace(/\s+/g, "-")}`}
+            linkHeader={item.name}
+            artistName={item.artist.name}
+          />
+        ))
+      }
     </div>
   </div>
-
-  <style lang="scss">
-    @use "../styles/abstracts/" as *;
-
-    .card {
-      position: relative;
-      display: grid;
-
-      &:hover .card__image::after {
-        opacity: 1;
-      }
-
-      & > * {
-        grid-column: 1;
-        grid-row: 1;
-      }
-
-      &__image {
-        position: relative;
-        &::after {
-          content: "";
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background: hsla(0, 0%, 100%, 50%);
-          opacity: 0;
-          transition: opacity 270ms ease-in-out;
-        }
-        & > img {
-          width: 100%;
-          height: auto;
-          object-fit: cover;
-          object-position: top top;
-        }
-      }
-
-      &__info {
-        align-self: end;
-        background: linear-gradient(
-          to bottom,
-          hsla(0, 0%, 0%, 0.01%) 0%,
-          hsla(0, 0%, 0%, 84%) 100%
-        );
-        z-index: 100;
-      }
-
-      &__link {
-        &::after {
-          content: "";
-          position: absolute;
-          inset: 0;
-        }
-      }
-    }
-  </style>
 </Layout>
+
+<style lang="scss">
+  @use "../styles/abstracts/" as *;
+
+  .gallery-cards {
+    display: grid;
+    gap: $size-6;
+    grid-template-columns: repeat(auto-fill, minmax(15.625rem, 1fr));
+    align-items: start;
+
+    @include mq(medium) {
+      gap: $size-10;
+    }
+  }
+</style>
