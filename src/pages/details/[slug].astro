@@ -81,7 +81,7 @@ export async function getStaticPaths() {
         />
       </div>
       <div class="details">
-        <p class="details__description" style={`--year: ${artwork.year}`}>
+        <p class="details__description" style={`--year: "${artwork.year}"`}>
           {artwork.description}
         </p>
         <Button class="mt-17" href={artwork.source} type="source"
