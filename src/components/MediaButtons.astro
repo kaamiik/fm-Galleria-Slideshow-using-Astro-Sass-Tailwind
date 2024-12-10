@@ -1,10 +1,14 @@
 ---
-
+const { prevDisabled, nextDisabled, prevHref, nextHref } = Astro.props;
 ---
 
 <div class="flex gap-6 items-center">
   <!-- Back Button -->
-  <button class="media-button js-back-btn">
+  <button
+    class="media-button js-back-btn"
+    disabled={prevDisabled}
+    onclick={`window.location.href='${prevHref}'`}
+  >
     <span class="visually-hidden">PREVIOUS SLIDE</span>
     <svg
       width="26"
@@ -21,7 +25,11 @@
   </button>
 
   <!-- Next Button -->
-  <button class="media-button js-next-btn">
+  <button
+    class="media-button js-next-btn"
+    disabled={nextDisabled}
+    onclick={`window.location.href='${nextHref}'`}
+  >
     <span class="visually-hidden">NEXT SLIDE</span>
     <svg
       width="26"
