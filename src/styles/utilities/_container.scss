@@ -6,15 +6,28 @@
 
   width: min(100% - var(--padding), var(--max-width));
   margin-inline: auto;
-  padding-block: $size-6;
-}
 
-// .container[data-type="narrow"] {
-//   --max-width: #{$container-max-width-narrow};
-// }
-// .container[data-type="wide"] {
-//   --max-width: #{$container-max-width-wide};
-// }
-// .container[data-type="full-bleed"] {
-//   --max-width: 100%;
-// }
+  @include mq(medium) {
+    --padding: #{$container-min-margin-inline-tablet} * 2;
+  }
+
+  &[data-page="index"] {
+    margin-block: $size-6;
+
+    @include mq(medium) {
+      margin-block: $size-10;
+    }
+  }
+
+  &[data-page="details"] {
+    margin-block: $size-6 0;
+
+    @include mq(medium) {
+      margin-block: $size-10 0;
+    }
+
+    @include mq(large) {
+      margin-block: 6.5rem 4.5rem;
+    }
+  }
+}
