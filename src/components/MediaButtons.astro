@@ -5,7 +5,7 @@ const { prevDisabled, nextDisabled, prevHref, nextHref } = Astro.props;
 <div class="flex gap-6 items-center">
   <!-- Back Button -->
   <button
-    class="media-button js-back-btn"
+    class="media-button"
     disabled={prevDisabled}
     onclick={`window.location.href='${prevHref}'`}
   >
@@ -26,7 +26,7 @@ const { prevDisabled, nextDisabled, prevHref, nextHref } = Astro.props;
 
   <!-- Next Button -->
   <button
-    class="media-button js-next-btn"
+    class="media-button"
     disabled={nextDisabled}
     onclick={`window.location.href='${nextHref}'`}
   >
