@@ -1,0 +1,74 @@
+---
+const { imageThumbnail, link = "#", linkHeader, artistName } = Astro.props;
+---
+
+<div class="gallery-card">
+  <!-- Thumbnail Image -->
+  <div class="gallery-card__thumbnail">
+    <img src={imageThumbnail} alt="" />
+  </div>
+  <!-- Link and Subhead -->
+  <div class="gallery-card__header p-8 pe-12 pt-14 flex flex-col gap-2">
+    <a class="gallery-card__link text-100 fs-700 leading-tight" href={link}
+      >{linkHeader}</a
+    >
+    <p class="text-100/75 fs-300 leading-tight font-normal">{artistName}</p>
+  </div>
+</div>
+
+<style lang="scss">
+  @use "../styles/abstracts/" as *;
+
+  .gallery-card {
+    position: relative;
+    display: grid;
+
+    &:hover .gallery-card__thumbnail::after {
+      opacity: 1;
+    }
+
+    & > * {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    &__thumbnail {
+      position: relative;
+      &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: hsla(0, 0%, 100%, 50%);
+        opacity: 0;
+        transition: opacity 270ms ease-in-out;
+      }
+      & > img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        object-position: top top;
+      }
+    }
+
+    &__header {
+      align-self: end;
+      background: linear-gradient(
+        to bottom,
+        hsla(0, 0%, 0%, 0%) 0%,
+        hsla(0, 0%, 0%, 84%) 100%
+      );
+      z-index: 100;
+    }
+
+    &__link {
+      &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+      }
+    }
+  }
+</style>
