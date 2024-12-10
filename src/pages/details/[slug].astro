@@ -36,7 +36,7 @@ export async function getStaticPaths() {
 }
 ---
 
-<Layout title="Frontend Mentor | Galleria slideshow site" start={false}>
+<Layout title={`Frontend Mentor | ${artwork.name}`} start={false}>
   <div class="container" data-page="details">
     <div class="galleria-slideshow">
       <div class="hero">
@@ -107,8 +107,8 @@ export async function getStaticPaths() {
         <p class="text-[0.625rem] md:text-[0.8125rem]">{artwork.artist.name}</p>
       </div>
       <MediaButtons
-        prevDisabled={!prevIndex}
-        nextDisabled={!nextIndex}
+        prevDisabled={currentIndex === 0}
+        nextDisabled={currentIndex === data.length - 1}
         prevHref={prevSlug ? `/details/${prevSlug}` : null}
         nextHref={nextSlug ? `/details/${nextSlug}` : null}
       />
