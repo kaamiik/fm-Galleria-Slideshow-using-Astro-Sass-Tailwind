@@ -1,5 +1,10 @@
 ---
 import Button from "./Button.astro";
+import data from "../data.json";
+
+const { start } = Astro.props;
+
+const firstItemSlug = data[0]?.name.toLowerCase().replace(/\s+/g, "-");
 ---
 
 <header class="site-header">
@@ -8,13 +13,15 @@ import Button from "./Button.astro";
       <img
         class="logo"
         aria-hidden="true"
-        src="/assets/images/shared/logo.svg"
+        src="/assets/shared/logo.svg"
         alt=""
       />
       <p class="visually-hidden">GALLERIA SLIDESHOW SITE</p>
     </a>
-
-    <Button href="#" type="slideshow">Start Slideshow</Button>
+    <Button
+      href={start ? `/details/${firstItemSlug}` : "/index.html"}
+      type="slideshow">{start ? "Start Slideshow" : "Stop Slideshow"}</Button
+    >
   </div>
 </header>
 
@@ -22,8 +29,11 @@ import Button from "./Button.astro";
   @use "../styles/abstracts" as *;
 
   .site-header {
+    --max-width: #{$container-max-width};
     padding: $site-header-padding-small-screen;
     border-bottom: 1px solid $color-neutral-300;
+    width: min(100%, var(--max-width));
+    margin-inline: auto;
 
     @include mq(medium) {
       padding: $site-header-padding-large-screen;
