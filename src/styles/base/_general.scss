@@ -8,3 +8,13 @@ body {
   background-color: $body-background-color;
   line-height: $body-line-height;
 }
+
+main {
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+
+  & > *:first-child {
+    flex-grow: 1;
+  }
+}
