@@ -1,0 +1,301 @@
+---
+import Layout from "../../layouts/BaseLayout.astro";
+import Button from "../../components/Button.astro";
+import MediaButtons from "../../components/MediaButtons.astro";
+import data from "../../data.json";
+
+const { slug } = Astro.params;
+
+const currentIndex = data.findIndex(
+  (item) => item.name.toLowerCase().replace(/\s+/g, "-") === slug
+);
+const artwork = data[currentIndex];
+
+if (!artwork) {
+  throw new Error(`Artwork not found for slug: ${slug}`);
+}
+
+const prevIndex = currentIndex > 0 ? currentIndex - 1 : null;
+const nextIndex = currentIndex < data.length - 1 ? currentIndex + 1 : null;
+
+const prevSlug =
+  prevIndex !== null
+    ? data[prevIndex].name.toLowerCase().replace(/\s+/g, "-")
+    : null;
+const nextSlug =
+  nextIndex !== null
+    ? data[nextIndex].name.toLowerCase().replace(/\s+/g, "-")
+    : null;
+
+export async function getStaticPaths() {
+  return data.map((item) => ({
+    params: {
+      slug: item.name.toLowerCase().replace(/\s+/g, "-"),
+    },
+  }));
+}
+---
+
+<Layout title="Frontend Mentor | Galleria slideshow site" start={false}>
+  <div class="container" data-page="details">
+    <div class="galleria-slideshow">
+      <div class="hero">
+        <!-- Top Hero Image -->
+        <div class="hero__image relative">
+          <Button type="view-image">
+            <svg width="12" height="12" xmlns="http://www.w3.org/2000/svg"
+              ><g fill="#FFF" fill-rule="nonzero"
+                ><path
+                  d="M7.714 0l1.5 1.5-2.357 2.357 1.286 1.286L10.5 2.786l1.5 1.5V0zM3.857 6.857L1.5 9.214 0 7.714V12h4.286l-1.5-1.5 2.357-2.357zM8.143 6.857L6.857 8.143 9.214 10.5l-1.5 1.5H12V7.714l-1.5 1.5zM4.286 0H0v4.286l1.5-1.5 2.357 2.357 1.286-1.286L2.786 1.5z"
+                ></path></g
+              ></svg
+            >
+            View Image
+          </Button>
+          <picture>
+            <source
+              srcset={artwork.images.hero.large}
+              media="(min-width: 48em)"
+              width="475"
+              height="560"
+            />
+            <img src={artwork.images.hero.small} alt={artwork.name} />
+          </picture>
+          <dialog>
+            <Button type="close-dialog">Close</Button>
+            <img src={artwork.images.gallery} alt={artwork.name} />
+          </dialog>
+        </div>
+        <!-- Header and Subheader -->
+        <div class="hero__content p-6 bg-100 md:p-0 md:px-17 md:pb-17">
+          <div class="flex flex-col gap-2">
+            <h1 class="fs-800 text-900 leading-tight">{artwork.name}</h1>
+            <p class="fs-500">{artwork.artist.name}</p>
+          </div>
+        </div>
+        <!-- Avatar of the creator -->
+        <img
+          class="hero__avatar w-16 ms-4 md:w-24 md:ms-8"
+          src={artwork.artist.image}
+          alt={artwork.artist.name}
+        />
+      </div>
+      <div class="details">
+        <p class="details__description" style={`--year: ${artwork.year}`}>
+          {artwork.description}
+        </p>
+        <Button class="mt-17" href={artwork.source} type="source"
+          >Go to Source</Button
+        >
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <progress
+      class="progress-bar"
+      max={data.length}
+      value={currentIndex + 1}
+      aria-valuemax={data.length}
+      aria-valuemin="1"
+      aria-valuenow={currentIndex + 1}></progress>
+    <div
+      class="px-6 py-4 flex items-center justify-between gap-4 md:px-10 md:py-6"
+    >
+      <div class="flex flex-col gap-2">
+        <h2 class="fs-600 text-900 leading-tight">{artwork.name}</h2>
+        <p class="text-[0.625rem] md:text-[0.8125rem]">{artwork.artist.name}</p>
+      </div>
+      <MediaButtons
+        prevDisabled={!prevIndex}
+        nextDisabled={!nextIndex}
+        prevHref={prevSlug ? `/details/${prevSlug}` : null}
+        nextHref={nextSlug ? `/details/${nextSlug}` : null}
+      />
+    </div>
+  </div>
+</Layout>
+
+<script>
+  const dialog = document.querySelector("dialog");
+  const showDialogButton = document.querySelector(
+    "button[data-type='view-image']"
+  );
+  const closeDialogButton = document.querySelector(
+    "button[data-type='close-dialog']"
+  );
+
+  showDialogButton.addEventListener("click", () => {
+    dialog.showModal();
+  });
+
+  closeDialogButton.addEventListener("click", () => {
+    dialog.close();
+  });
+</script>
+
+<style lang="scss">
+  @use "../../styles/abstracts/" as *;
+
+  .galleria-slideshow {
+    display: grid;
+
+    @include mq(large) {
+      grid-template-columns: 3fr 1.75fr;
+      column-gap: $size-8;
+    }
+  }
+
+  .hero {
+    display: grid;
+    grid-template-rows: 1fr 3.125rem auto auto;
+    justify-content: center;
+
+    @include mq(medium) {
+      grid-template-rows: auto 1fr 4rem;
+      grid-template-columns: auto 14.5rem 1fr;
+      width: max-content;
+      margin-inline: auto;
+    }
+
+    @include mq(large) {
+      grid-template-columns: auto 4.25rem 1fr;
+      width: revert;
+      margin-inline: revert;
+    }
+
+    &__image {
+      grid-column: 1;
+      grid-row: 1 / 3;
+      z-index: 1;
+
+      @include mq(medium) {
+        grid-row: 1 / 3;
+        grid-column: 1 / 3;
+      }
+    }
+
+    &__content {
+      grid-column: 1;
+      grid-row: 2 / 4;
+      z-index: 2;
+      width: 85%;
+      max-width: 28rem;
+      @include mq(medium) {
+        grid-row: 1 / 2;
+        grid-column: 2 / 4;
+        width: revert;
+      }
+    }
+
+    &__avatar {
+      grid-column: 1;
+      grid-row: 4;
+      z-index: 200;
+
+      @include mq(medium) {
+        grid-row: 2 / 4;
+        grid-column: 3;
+      }
+
+      @include mq(large) {
+        align-self: end;
+      }
+    }
+  }
+
+  .details {
+    padding-block: $size-14;
+    max-width: 28.75rem;
+    margin-inline: auto;
+    @include mq(medium) {
+      padding-block: $size-20 $size-10;
+    }
+
+    @include mq(large) {
+      padding-block: 0;
+      max-width: 21.875rem;
+      margin-inline: revert;
+      align-self: center;
+    }
+
+    &__description {
+      position: relative;
+      z-index: 100;
+
+      &::before {
+        content: var(--year);
+        position: absolute;
+        top: 0;
+        right: 0;
+        transform: translateY(-75%);
+        font-size: $font-size-900;
+        color: $color-neutral-200;
+        line-height: 1;
+        z-index: -1;
+
+        @include mq(medium) {
+          top: 56px;
+          right: revert;
+          left: -115px;
+          line-height: 0.75;
+        }
+
+        @include mq(large) {
+          top: 0;
+          left: 0;
+        }
+      }
+    }
+  }
+
+  .progress-bar {
+    border: none;
+    width: 100%;
+    height: 1px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: $color-neutral-300;
+    overflow: hidden;
+    position: relative;
+
+    &::-webkit-progress-value {
+      background-color: $color-neutral-900;
+      height: 100%;
+      transition: width 0.5s ease;
+    }
+
+    &::-moz-progress-bar {
+      background-color: $color-neutral-900;
+      height: 100%;
+      transition: width 0.5s ease;
+    }
+
+    &::-ms-fill {
+      background-color: $color-neutral-900;
+      height: 100%;
+      transition: width 0.5s ease;
+    }
+
+    &::-webkit-progress-bar {
+      background-color: transparent;
+    }
+  }
+
+  dialog {
+    border: none;
+    background: none;
+    position: relative;
+    padding-block: $size-16;
+    padding-inline: $size-6;
+
+    @include mq(medium) {
+      padding-inline: $size-12;
+    }
+    &::backdrop {
+      background: $color-neutral-900;
+      opacity: 85%;
+    }
+  }
+</style>
