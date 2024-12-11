@@ -76,5 +76,10 @@ const { prevDisabled, nextDisabled, prevHref, nextHref } = Astro.props;
       stroke: $color-neutral-900;
       opacity: 50%;
     }
+
+    &:focus-visible {
+      outline: 3px solid red;
+      outline-offset: 2px;
+    }
   }
 </style>

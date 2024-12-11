@@ -1,14 +1,14 @@
 ---
 import BaseHead from "../components/BaseHead.astro";
 import SiteHeader from "../components/SiteHeader.astro";
-const { title, start = true } = Astro.props;
+const { title, startSlideshow = true } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en">
   <BaseHead {title} />
   <body>
-    <SiteHeader {start} />
+    <SiteHeader {startSlideshow} />
     <main>
       <slot />
     </main>

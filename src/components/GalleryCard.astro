@@ -22,9 +22,156 @@ const { imageThumbnail, link = "#", linkHeader, artistName } = Astro.props;
   .gallery-card {
     position: relative;
     display: grid;
+    transform: scale(1);
+    transition: transform 300ms ease-in-out;
+
+    @include mq(medium) {
+      &:nth-child(1) {
+        grid-row: 1 / span 50;
+        grid-column: 1;
+      }
+
+      &:nth-child(2) {
+        grid-row: 1 / span 80;
+        grid-column: 2;
+      }
+
+      &:nth-child(3) {
+        grid-row: 59 / span 57;
+        grid-column: 1;
+      }
+
+      &:nth-child(4) {
+        grid-row: 89 / span 50;
+        grid-column: 2;
+      }
+
+      &:nth-child(5) {
+        grid-row: 124 / span 68;
+        grid-column: 1;
+      }
+
+      &:nth-child(6) {
+        grid-row: 147 / span 56;
+        grid-column: 2;
+      }
+
+      &:nth-child(7) {
+        grid-row: 200 / span 100;
+      }
+
+      &:nth-child(8) {
+        grid-row: 211 / span 50;
+        grid-column: 2;
+      }
+      &:nth-child(9) {
+        grid-row: 308 / span 84;
+        grid-column: 1;
+      }
+      &:nth-child(10) {
+        grid-row: 269 / span 52;
+        grid-column: 2;
+      }
+      &:nth-child(11) {
+        grid-row: 329 / span 86;
+        grid-column: 2;
+      }
+      &:nth-child(12) {
+        grid-row: 400 / span 52;
+        grid-column: 1;
+      }
+      &:nth-child(13) {
+        grid-row: 423 / span 66;
+        grid-column: 2;
+      }
+      &:nth-child(14) {
+        grid-row: 460 / span 105;
+        grid-column: 1;
+      }
+
+      &:nth-child(15) {
+        grid-row: 497 / span 68;
+        grid-column: 2;
+      }
+    }
+
+    @include mq(xmedium) {
+      &:nth-child(1) {
+        grid-row: 1 / span 50;
+        grid-column: 1;
+      }
+
+      &:nth-child(2) {
+        grid-row: 1 / span 80;
+        grid-column: 2;
+      }
+
+      &:nth-child(3) {
+        grid-row: 1 / span 57;
+        grid-column: 3;
+      }
+
+      &:nth-child(4) {
+        grid-row: 1 / span 50;
+        grid-column: 4;
+      }
+
+      &:nth-child(5) {
+        grid-row: 59 / span 68;
+        grid-column: 1;
+      }
+
+      &:nth-child(6) {
+        grid-row: 89 / span 56;
+        grid-column: 2;
+      }
+
+      &:nth-child(7) {
+        grid-row: 66 / span 100;
+        grid-column: 3;
+      }
+
+      &:nth-child(8) {
+        grid-row: 59 / span 50;
+        grid-column: 4;
+      }
+      &:nth-child(9) {
+        grid-row: 135 / span 84;
+        grid-column: 1;
+      }
+      &:nth-child(10) {
+        grid-row: 153 / span 52;
+        grid-column: 2;
+      }
+      &:nth-child(11) {
+        grid-row: 117 / span 86;
+        grid-column: 4;
+      }
+      &:nth-child(12) {
+        grid-row: 227 / span 52;
+        grid-column: 1;
+      }
+      &:nth-child(13) {
+        grid-row: 213 / span 66;
+        grid-column: 2;
+      }
+      &:nth-child(14) {
+        grid-row: 174 / span 105;
+        grid-column: 3;
+      }
+
+      &:nth-child(15) {
+        grid-row: 211 / span 68;
+        grid-column: 4;
+      }
+    }
 
     &:hover .gallery-card__thumbnail::after {
       opacity: 1;
+    }
+
+    &:hover {
+      transform: scale(1.1);
     }
 
     & > * {
@@ -47,7 +194,7 @@ const { imageThumbnail, link = "#", linkHeader, artistName } = Astro.props;
       }
       & > img {
         width: 100%;
-        height: auto;
+        height: 100%;
         object-fit: cover;
         object-position: top top;
       }
@@ -68,6 +215,11 @@ const { imageThumbnail, link = "#", linkHeader, artistName } = Astro.props;
         content: "";
         position: absolute;
         inset: 0;
+      }
+
+      &:focus-visible {
+        outline: 3px solid red;
+        outline-offset: 3px;
       }
     }
   }

@@ -27,6 +27,11 @@ const combinedClasses = `button ${additionalClasses}`;
     background: none;
     transition: 275ms ease;
 
+    &:focus-visible {
+      outline: 3px solid red;
+      outline-offset: 5px;
+    }
+
     &[data-type="slideshow"],
     &[data-type="source"] {
       color: $color-neutral-400;
@@ -74,7 +79,8 @@ const combinedClasses = `button ${additionalClasses}`;
       top: $size-2;
       right: $size-4;
       font-size: 1rem;
-      color: $color-neutral-100;
+      color: $color-neutral-900;
+      background-color: $color-neutral-100;
       letter-spacing: $letter-spacing-3;
 
       @include mq(medium) {
@@ -82,7 +88,8 @@ const combinedClasses = `button ${additionalClasses}`;
       }
 
       &:is(:hover, :focus) {
-        color: hsla(0, 0%, 100%, 25%);
+        color: $color-neutral-100;
+        background-color: $color-neutral-900;
       }
     }
   }

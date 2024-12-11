@@ -2,14 +2,14 @@
 import Button from "./Button.astro";
 import data from "../data.json";
 
-const { start } = Astro.props;
+const { startSlideshow } = Astro.props;
 
 const firstItemSlug = data[0]?.name.toLowerCase().replace(/\s+/g, "-");
 ---
 
 <header class="site-header">
   <div class="site-header__inner">
-    <a href="/index.html">
+    <a class="site-header__link" href="/index.html">
       <img
         class="logo"
         aria-hidden="true"
@@ -19,8 +19,9 @@ const firstItemSlug = data[0]?.name.toLowerCase().replace(/\s+/g, "-");
       <p class="visually-hidden">GALLERIA SLIDESHOW SITE</p>
     </a>
     <Button
-      href={start ? `/details/${firstItemSlug}` : "/index.html"}
-      type="slideshow">{start ? "Start Slideshow" : "Stop Slideshow"}</Button
+      href={startSlideshow ? `/details/${firstItemSlug}` : "/index.html"}
+      type="slideshow"
+      >{startSlideshow ? "Start Slideshow" : "Stop Slideshow"}</Button
     >
   </div>
 </header>
@@ -31,7 +32,7 @@ const firstItemSlug = data[0]?.name.toLowerCase().replace(/\s+/g, "-");
   .site-header {
     --max-width: #{$container-max-width};
     padding: $site-header-padding-small-screen;
-    border-bottom: 1px solid $color-neutral-300;
+    border-bottom: 2px solid $color-neutral-300;
     width: min(100%, var(--max-width));
     margin-inline: auto;
 
@@ -45,6 +46,13 @@ const firstItemSlug = data[0]?.name.toLowerCase().replace(/\s+/g, "-");
       flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
+    }
+
+    &__link {
+      &:focus-visible {
+        outline: 3px solid red;
+        outline-offset: 8px;
+      }
     }
   }
 
